@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <meta http-equiv="CONTENT-TYPE" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" href="styles/style.css"/>
+  <title>Hello, World!</title>
+</head>
+<body>
+  <h1>
+    Hello, Prashant!
+  </h1>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>50 GK GS Quiz</title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #74ebd5, #9face6);
+    margin: 0;
+    padding: 20px;
+}
+
+.quiz {
+    max-width: 500px;
+    margin: auto;
+    background: white;
+    padding: 25px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 5px 20px #555;
+}
+
+h1 {
+    color: #222;
+}
+
+#questionNo {
+    color: #666;
+    font-size: 18px;
+}
+
+#question {
+    font-size: 22px;
+    font-weight: bold;
+    margin: 25px 0;
+}
+
+.option {
+    display: block;
+    width: 100%;
+    padding: 13px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 10px;
+    background: #1769e0;
+    color: white;
+    font-size: 17px;
+}
+.option.correct {
+    background: green;
+    color: white;
+    border-color: green;
+}
+
+.option.wrong {
+    background: red;
+    color: white;
+    border-color: red;
+}
+.option:active {
+    background: #0b3d91;
+}
+
+button.next {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 10px;
+    background: #ff6600;
+    color: white;
+    font-size: 17px;
+    margin-top: 15px;
+}
+
+#result {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#score {
+    font-size: 19px;
+    font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="quiz">
+
+<h1>📚 GK GS Quiz</h1>
+
+<p id="questionNo"></p>
+
+<p id="question"></p>
+<p id="timer">⏱️ समय: 10:00</p>
+<div id="options"></div>
+
+<p id="result"></p>
+
+<p id="score">Score: 0</p>
+<p id="correct">✅ सही: 0</p>
+<p id="wrong">❌ गलत: 0</p>
+<p id="percentage">📊 प्रतिशत: 0%</p>
+<button class="next" onclick="nextQuestion()">
+अगला सवाल ➡️
+</button>
+
+</div>
+
+<script>
+
+let questions = [
+
+{
+q:"भारत की राजधानी क्या है?",
+o:["मुंबई","नई दिल्ली","कोलकाता","चेन्नई"],
+a:"नई दिल्ली"
+},
+
+{
+q:"भारत का राष्ट्रीय पशु कौन है?",
+o:["शेर","बाघ","हाथी","हिरण"],
+a:"बाघ"
+},
+
+{
+q:"भारत का राष्ट्रीय पक्षी कौन है?",
+o:["तोता","मोर","कबूतर","हंस"],
+a:"मोर"
+},
+
+{
+q:"भारत का राष्ट्रीय फूल कौन है?",
+o:["गुलाब","कमल","गेंदा","सूरजमुखी"],
+a:"कमल"
+},
+
+{
+q:"भारत का राष्ट्रीय फल कौन है?",
+o:["सेब","आम","केला","अंगूर"],
+a:"आम"
+},
+
+{
+q:"पानी का रासायनिक सूत्र क्या है?",
+o:["CO2","O2","H2O","NaCl"],
+a:"H2O"
+},
+
+{
+q:"सूर्य के सबसे निकट ग्रह कौन सा है?",
+o:["पृथ्वी","बुध","मंगल","शुक्र"],
+a:"बुध"
+},
+
+{
+q:"पृथ्वी का प्राकृतिक उपग्रह कौन है?",
+o:["सूर्य","चंद्रमा","मंगल","शुक्र"],
+a:"चंद्रमा"
+},
+
+{
+q:"भारत में कितने राज्य हैं?",
+o:["26","28","30","32"],
+a:"28"
+},
+
+{
+q:"भारत में कितने केंद्र शासित प्रदेश हैं?",
+o:["6","7","8","9"],
+a:"8"
+},
+
+{
+q:"भारतीय संविधान कब लागू हुआ?",
+o:["15 अगस्त 1947","26 जनवरी 1950","26 नवंबर 1949","2 अक्टूबर 1950"],
+a:"26 जनवरी 1950"
+},
+
+{
+q:"भारत का संविधान कब अपनाया गया?",
+o:["15 अगस्त 1947","26 जनवरी 1950","26 नवंबर 1949","2 अक्टूबर 1949"],
+a:"26 नवंबर 1949"
+},
+
+{
+q:"भारत का राष्ट्रीय ध्वज किसने डिजाइन किया था?",
+o:["पिंगली वेंकैया","महात्मा गांधी","जवाहरलाल नेहरू","सरदार पटेल"],
+a:"पिंगली वेंकैया"
+},
+
+{
+q:"भारत का राष्ट्रीय गान कौन सा है?",
+o:["वंदे मातरम्","जन गण मन","सारे जहाँ से अच्छा","ऐ मेरे वतन"],
+a:"जन गण मन"
+},
+
+{
+q:"भारत का राष्ट्रीय गीत कौन सा है?",
+o:["जन गण मन","वंदे मातरम्","सारे जहाँ से अच्छा","विजयी विश्व तिरंगा"],
+a:"वंदे मातरम्"
+},
+
+{
+q:"ताजमहल किस शहर में है?",
+o:["दिल्ली","आगरा","जयपुर","लखनऊ"],
+a:"आगरा"
+},
+
+{
+q:"लाल किला कहाँ स्थित है?",
+o:["आगरा","दिल्ली","मुंबई","जयपुर"],
+a:"दिल्ली"
+},
+
+{
+q:"भारत में स्वतंत्रता दिवस कब मनाया जाता है?",
+o:["26 जनवरी","15 अगस्त","2 अक्टूबर","14 नवंबर"],
+a:"15 अगस्त"
+},
+
+{
+q:"गणतंत्र दिवस कब मनाया जाता है?",
+o:["15 अगस्त","26 जनवरी","2 अक्टूबर","14 नवंबर"],
+a:"26 जनवरी"
+},
+
+{
+q:"महात्मा गांधी का जन्मदिन कब मनाया जाता है?",
+o:["2 अक्टूबर","15 अगस्त","26 जनवरी","14 नवंबर"],
+a:"2 अक्टूबर"
+},
+
+{
+q:"पृथ्वी सूर्य की परिक्रमा लगभग कितने समय में करती है?",
+o:["24 घंटे","30 दिन","365 दिन","12 घंटे"],
+a:"365 दिन"
+},
+
+{
+q:"मानव शरीर में रक्त को पंप कौन करता है?",
+o:["फेफड़े","हृदय","यकृत","गुर्दा"],
+a:"हृदय"
+},
+
+{
+q:"मानव शरीर में कितने फेफड़े होते हैं?",
+o:["1","2","3","4"],
+a:"2"
+},
+
+{
+q:"पौधे प्रकाश संश्लेषण में किस गैस का उपयोग करते हैं?",
+o:["ऑक्सीजन","नाइट्रोजन","कार्बन डाइऑक्साइड","हाइड्रोजन"],
+a:"कार्बन डाइऑक्साइड"
+},
+
+{
+q:"ऑक्सीजन का रासायनिक सूत्र क्या है?",
+o:["O2","CO2","H2","N2"],
+a:"O2"
+},
+
+{
+q:"कार्बन डाइऑक्साइड का सूत्र क्या है?",
+o:["CO2","O2","H2O","NaCl"],
+a:"CO2"
+},
+
+{
+q:"जल का क्वथनांक सामान्य दबाव पर कितना है?",
+o:["50°C","75°C","100°C","150°C"],
+a:"100°C"
+},
+
+{
+q:"सौरमंडल का सबसे बड़ा ग्रह कौन सा है?",
+o:["पृथ्वी","बृहस्पति","शनि","मंगल"],
+a:"बृहस्पति"
+},
+
+{
+q:"लाल ग्रह किसे कहा जाता है?",
+o:["शुक्र","मंगल","बुध","शनि"],
+a:"मंगल"
+},
+
+{
+q:"नीला ग्रह किसे कहा जाता है?",
+o:["पृथ्वी","मंगल","बुध","शनि"],
+a:"पृथ्वी"
+},
+
+{
+q:"भारत की सबसे लंबी नदी कौन सी है?",
+o:["यमुना","गंगा","गोदावरी","नर्मदा"],
+a:"गंगा"
+},
+
+{
+q:"भारत का सबसे बड़ा राज्य क्षेत्रफल के आधार पर कौन सा है?",
+o:["उत्तर प्रदेश","मध्य प्रदेश","राजस्थान","महाराष्ट्र"],
+a:"राजस्थान"
+},
+
+{
+q:"भारत का सबसे अधिक जनसंख्या वाला राज्य कौन सा है?",
+o:["बिहार","महाराष्ट्र","उत्तर प्रदेश","राजस्थान"],
+a:"उत्तर प्रदेश"
+},
+
+{
+q:"उत्तर प्रदेश की राजधानी क्या है?",
+o:["कानपुर","प्रयागराज","लखनऊ","वाराणसी"],
+a:"लखनऊ"
+},
+
+{
+q:"उत्तर प्रदेश का सबसे बड़ा शहर जनसंख्या के आधार पर कौन सा है?",
+o:["लखनऊ","कानपुर","आगरा","वाराणसी"],
+a:"लखनऊ"
+},
+
+{
+q:"भारत में हरित क्रांति से किसका नाम जुड़ा है?",
+o:["एम. एस. स्वामीनाथन","सी. वी. रमन","होमी भाभा","ए. पी. जे. अब्दुल कलाम"],
+a:"एम. एस. स्वामीनाथन"
+},
+
+{
+q:"भारत में श्वेत क्रांति से किसका नाम जुड़ा है?",
+o:["वर्गीज कुरियन","एम. एस. स्वामीनाथन","विक्रम साराभाई","सी. वी. रमन"],
+a:"वर्गीज कुरियन"
+},
+
+{
+q:"भारत का पहला उपग्रह कौन सा था?",
+o:["आर्यभट्ट","रोहिणी","चंद्रयान","भास्कर"],
+a:"आर्यभट्ट"
+},
+
+{
+q:"भारत का अंतरिक्ष संगठन किस नाम से जाना जाता है?",
+o:["ISRO","NASA","DRDO","WHO"],
+a:"ISRO"
+},
+
+{
+q:"विश्व स्वास्थ्य संगठन का मुख्यालय कहाँ है?",
+o:["लंदन","पेरिस","जिनेवा","न्यूयॉर्क"],
+a:"जिनेवा"
+},
+
+{
+q:"संयुक्त राष्ट्र संगठन की स्थापना किस वर्ष हुई?",
+o:["1945","1950","1935","1960"],
+a:"1945"
+},
+
+{
+q:"भारत का सबसे ऊँचा पर्वत शिखर कौन सा है?",
+o:["कंचनजंगा","नंदा देवी","माउंट एवरेस्ट","अन्नपूर्णा"],
+a:"कंचनजंगा"
+},
+
+{
+q:"भारत में सबसे लंबी समुद्री तटरेखा वाला राज्य कौन सा है?",
+o:["गुजरात","महाराष्ट्र","तमिलनाडु","केरल"],
+a:"गुजरात"
+},
+
+{
+q:"कंप्यूटर का मस्तिष्क किसे कहा जाता है?",
+o:["मॉनिटर","CPU","कीबोर्ड","माउस"],
+a:"CPU"
+},
+
+{
+q:"CPU का पूरा नाम क्या है?",
+o:["Central Processing Unit","Computer Personal Unit","Central Power Unit","Control Processing Unit"],
+a:"Central Processing Unit"
+},
+
+{
+q:"WWW का पूरा नाम क्या है?",
+o:["World Wide Web","World Web Window","Wide World Web","Web World Wide"],
+a:"World Wide Web"
+},
+
+{
+q:"HTML का पूरा नाम क्या है?",
+o:["HyperText Markup Language","HighText Machine Language","Hyper Tool Markup Language","Home Text Markup Language"],
+a:"HyperText Markup Language"
+},
+
+{
+q:"CSS का पूरा नाम क्या है?",
+o:["Cascading Style Sheets","Computer Style System","Creative Style Sheet","Color Style System"],
+a:"Cascading Style Sheets"
+},
+
+{
+q:"JavaScript मुख्य रूप से किसके लिए उपयोग होता है?",
+o:["वेब पेज में इंटरैक्टिविटी","केवल फोटो खींचने","केवल वीडियो देखने","केवल प्रिंटिंग"],
+a:"वेब पेज में इंटरैक्टिविटी"
+},
+
+{
+q:"एक किलोमीटर में कितने मीटर होते हैं?",
+o:["10","100","1000","10000"],
+a:"1000"
+},
+
+{
+q:"एक घंटे में कितने मिनट होते हैं?",
+o:["30","45","60","100"],
+a:"60"
+},
+
+{
+q:"एक सप्ताह में कितने दिन होते हैं?",
+o:["5","6","7","8"],
+a:"7"
+}
+
+];
+
+let current = 0;
+let score = 0;
+  let correct = 0;
+let wrong = 0;
+let answered = false;
+let timeLeft = 1200;
+let timer;
+
+function startTimer() {
+
+    clearInterval(timer);
+
+    timeLeft = 1200;
+
+    timer = setInterval(function() {
+
+        let minutes = Math.floor(timeLeft / 60);
+        let seconds = timeLeft % 60;
+
+        document.getElementById("timer").innerText =
+            "⏱️ समय: " +
+            minutes + ":" +
+            (seconds < 10 ? "0" : "") + seconds;
+
+        timeLeft--;
+
+        if (timeLeft < 0) {
+
+            clearInterval(timer);
+
+            document.getElementById("question").innerText =
+                "⏰ समय समाप्त!";
+
+            document.getElementById("options").innerHTML = "";
+
+            document.getElementById("result").innerText =
+                "🏆 आपका Score: " +
+                score + " / " +
+                questions.length;
+
+        }
+
+    }, 1000);
+}
+function showQuestion() {
+
+    let q = questions[current];
+
+    document.getElementById("questionNo").innerText =
+        "प्रश्न " + (current + 1) + " / " + questions.length;
+
+    document.getElementById("question").innerText = q.q;
+
+    let box = document.getElementById("options");
+
+    box.innerHTML = "";
+
+    document.getElementById("result").innerText = "";
+
+    answered = false;
+
+    q.o.forEach(function(option) {
+
+        let btn = document.createElement("button");
+
+        btn.innerText = option;
+
+        btn.className = "option";
+
+        btn.onclick = function() {
+            checkAnswer(option);
+        };
+
+        box.appendChild(btn);
+
+    });
+
+    document.getElementById("score").innerText =
+        "Score: " + score;
+}
+
+function checkAnswer(answer) {
+
+    if (answered) return;
+
+    answered = true;
+
+    let correct = questions[current].a;
+
+    if (answer === correct) {
+
+    score++;
+    correct++;
+
+    document.getElementById("result").innerText =
+        "✅ सही उत्तर!";
+
+} else {
+
+    wrong++;
+
+    document.getElementById("result").innerText =
+        "❌ गलत! सही उत्तर: " + correct;
+}
+
+let percentage =
+    Math.round((score / questions.length) * 100);
+
+document.getElementById("score").innerText =
+    "Score: " + score;
+
+document.getElementById("correct").innerText =
+    "✅ सही: " + correct;
+
+document.getElementById("wrong").innerText =
+    "❌ गलत: " + wrong;
+
+document.getElementById("percentage").innerText =
+    "📊 प्रतिशत: " + percentage + "%";
+
+    document.getElementById("score").innerText =
+        "Score: " + score;
+}
+
+function nextQuestion() {
+
+    if (!answered) {
+
+        document.getElementById("result").innerText =
+            "⚠️ पहले उत्तर चुनिए!";
+
+        return;
+    }
+
+    current++;
+
+    if (current >= questions.length) {
+
+        clearInterval(timer);
+
+        let percentage =
+            Math.round((score / questions.length) * 100);
+
+        document.getElementById("questionNo").innerText =
+            "🎉 Quiz Complete!";
+
+        document.getElementById("question").innerHTML =
+            "🏆 आपका Final Result";
+
+        document.getElementById("options").innerHTML = "";
+
+        document.getElementById("result").innerHTML =
+            "कुल प्रश्न: " + questions.length +
+            "<br><br>" +
+            "✅ सही उत्तर: " + correct +
+            "<br>" +
+            "❌ गलत उत्तर: " + wrong +
+            "<br>" +
+            "📊 प्रतिशत: " + percentage + "%";
+
+        document.getElementById("score").innerText =
+            "🏆 Final Score: " +
+            score + " / " + questions.length;
+
+        return;
+    }
+
+    showQuestion();
+}
+
+
+showQuestion();
+startTimer();
+
+</script>
+
+</body>
+</html>
+  
